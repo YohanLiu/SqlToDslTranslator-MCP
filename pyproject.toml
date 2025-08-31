@@ -1,9 +1,33 @@
 [project]
-name = "sqltodsltranslator-mcp"
+name = "SqlToDslTranslator-MCP"
 version = "0.1.0"
-description = "Add your description here"
+description = "A service to convert MySQL SQL queries to Elasticsearch DSL using MCP framework"
 readme = "README.md"
+license = "MIT"
+authors = [
+    { name = "'yohan'", email = "2220041897@qq.com" }
+]
 requires-python = ">=3.13"
 dependencies = [
-    "mcp[cli]>=1.13.1",
+    "build>=1.2.2.post1",
+    "fastmcp>=2.9.0",
+    "mcp[cli]>=1.9.4",
+    "twine>=6.1.0",
 ]
+
+[project.scripts]
+SqlToDslTranslator-MCP = "SqlToDslTranslator_MCP:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
