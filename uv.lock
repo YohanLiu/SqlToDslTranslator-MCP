@@ -1098,8 +1098,8 @@ wheels = [
 ]
 
 [[package]]
-name = "SqlToDslTranslator-MCP"
-version = "0.1.0"
+name = "sqltodsltranslator-mcp"
+version = "0.1.1"
 source = { editable = "." }
 dependencies = [
     { name = "build" },

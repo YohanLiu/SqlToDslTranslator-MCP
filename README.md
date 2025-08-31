@@ -15,89 +15,73 @@ SQL to Elasticsearch DSL Translator 是一个基于 MCP (Model Conversion Platfo
 
 这个转换器可以帮助熟悉 SQL 语法但不熟悉 Elasticsearch DSL 的开发者快速构建 Elasticsearch 查询。
 
-整个项目全是基于 ai 的自主生成。
+**整个项目全是基于 ai 的自主生成。**
 支持版本: Elasticsearch 7.17
 
 ## 部署指南
+### 使用 uvx（推荐）
 
-### 环境要求
-- Python 3.13 或更高版本
-- pip 或 poetry 用于依赖管理
+```bash
+uvx sqltodsltranslator-mcp@latest
+```
 
-### 安装步骤
+### 使用 pip
 
-1. 克隆项目代码：
-   ```bash
-   git clone <repository-url>
-   cd SqlToDslTranslator-MCP
-   ```
+```bash
+pip install sqltodsltranslator-mcp
+```
 
-2. 安装依赖：
-   ```bash
-   # 使用 pip
-   pip install -e .
-   
-   # 或使用 poetry
-   poetry install
-   ```
+### 从源码安装
 
-3. 运行服务：
-   ```bash
-   python -m SqlToDslTranslator_MCP
-   ```
+```bash
+git clone https://github.com/YohanLiu/SqlToDslTranslator-MCP
+cd SqlToDslTranslator-MCP
+pip install -e .
+```
+
+### 应用配置
+
+#### Claude Desktop 配置
+
+在应用配置文件中添加以下配置：
+
+```json
+{
+  "mcpServers": {
+    "SqlToDslTranslator": {
+      "args": [
+        "sqltodsltranslator-mcp@latest"
+      ],
+      "command": "uvx"
+    }
+  }
+}
+```
+
+#### Cherry Studio 配置
+
+```json
+{
+  "mcpServers": {
+    "SqlToDslTranslator": {
+      "args": [
+        "sqltodsltranslator-mcp@latest"
+      ],
+      "command": "uvx"
+    }
+  }
+}
+```
 
 ## 使用示例
 
-### 基本查询转换
+**演示示例用 Cherry Studio进行演示**
+首先在对话框中选择此 mcp 工具
 
-将简单的 SQL 查询转换为 Elasticsearch DSL：
+![image-20250831214721589](https://gitee.com/yohan_liu/photo/raw/master/20250831214721670.png)
 
-```python
-from src.SqlToDslTranslator_MCP.server import SQLToESDSLConverter
+然后输入形如如下的文案即可进行对比 `帮我转成DSL：SELECT id, name, age FROM users WHERE age > 18 AND status = 'active' ORDER BY age DESC LIMIT 10`
 
-# 创建转换器实例
-converter = SQLToESDSLConverter()
+![image-20250831214739269](https://gitee.com/yohan_liu/photo/raw/master/20250831214739341.png)
 
-sql = "SELECT id, name, age FROM users WHERE age > 18 ORDER BY age LIMIT 10"
-dsl = converter.convert(sql)
-print(dsl)
-```
-
-### 聚合查询
-
-支持 GROUP BY 和聚合函数：
-
-```python
-sql = "SELECT department, COUNT(*) as count FROM employees GROUP BY department"
-dsl = converter.convert(sql)
-print(dsl)
-```
-
-### 复杂条件查询
-
-支持多种条件和函数：
-
-```python
-sql = "SELECT name, ROUND(age/10)*10 as age_group, COUNT(*) FROM users WHERE status = 'active' GROUP BY ROUND(age/10)*10 HAVING COUNT(*) > 5"
-dsl = converter.convert(sql)
-print(dsl)
-```
-
-### 通过MCP工具使用
-
-作为MCP工具使用时，可以直接调用convert函数：
-
-```python
-from src.SqlToDslTranslator_MCP.server import convert
-
-result = convert("SELECT COUNT(*) FROM logs WHERE level = 'ERROR'")
-print(result)
-```
-
-### 命令行使用
-
-也可以通过命令行工具进行转换：
-
-```bash
-echo "SELECT COUNT(*) FROM logs WHERE level = 'ERROR'" | python -m SqlToDslTranslator_MCP
-```
+演示视频链接：https://www.bilibili.com/video/BV1vCa5zwEM1/

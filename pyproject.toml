@@ -1,6 +1,6 @@
 [project]
-name = "SqlToDslTranslator-MCP"
-version = "0.1.0"
+name = "sqltodsltranslator-mcp"
+version = "0.1.1"
 description = "A service to convert MySQL SQL queries to Elasticsearch DSL using MCP framework"
 readme = "README.md"
 license = "MIT"
@@ -16,7 +16,7 @@ dependencies = [
 ]
 
 [project.scripts]
-SqlToDslTranslator-MCP = "SqlToDslTranslator_MCP:main"
+sqltodsltranslator-mcp = "SqlToDslTranslator_MCP:main"
 
 [build-system]
 requires = ["hatchling"]
